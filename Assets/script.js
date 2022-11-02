@@ -49,7 +49,7 @@ function renderHistory() {
 
 function searchQuerry(cityName){
     var city = cityName
-    var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey + "&units=imperial";
+    var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey + "&units=imperial";
     fetch(queryURL)
         .then(function(response){
             return response.json()
@@ -60,7 +60,7 @@ function searchQuerry(cityName){
             // Search querry 5day
             var lat = data.coord.lat
             var lon = data.coord.lon
-            var queryUrl5day ="http://api.openweathermap.org/data/2.5/forecast?lat="+ lat +"&lon="+ lon +"&appid=" + APIKey + "&units=imperial";
+            var queryUrl5day ="https://api.openweathermap.org/data/2.5/forecast?lat="+ lat +"&lon="+ lon +"&appid=" + APIKey + "&units=imperial";
             return fetch(queryUrl5day)
         })
         .then(function(response){
@@ -83,7 +83,7 @@ function displayToday(data) {
     var wind = data.wind.speed
     var humidity = data.main.humidity
     var iconCode = data.weather[0].icon
-    var iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png";
+    var iconUrl = "https://openweathermap.org/img/w/" + iconCode + ".png";
     
     var today = moment().format("MM/DD/YYYY")
     var resultToday = $(".result__today")
@@ -133,7 +133,7 @@ function display5Days(data){
         container5Days.firstChild.innerHTML = container5Days.firstChild.innerHTML +
         `<div class="col col-2 bg-dark text-light">
             <h5 class="day">${moment(data.list[i].dt_txt).format("MM/DD/YYYY")}</h5>
-            <img src="http://openweathermap.org/img/w/${data.list[i].weather[0].icon}.png">
+            <img src="https://openweathermap.org/img/w/${data.list[i].weather[0].icon}.png">
             <div class="temp">temp: ${data.list[i].main.temp}\u2109</div>
             <div class="wind mt-2">wind: ${data.list[i].wind.speed} MPH</div>
             <div class="humidity mt-2 mb-2">humidity: ${data.list[i].main.humidity}%</div>
