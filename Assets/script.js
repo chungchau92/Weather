@@ -27,12 +27,12 @@ function handleSearchBtnClick(){
         return
     }
     searchQuerry(searchInputVal)
-    saveHistory(searchInputVal)
+    
     
 }
 
 function saveHistory(city) {
-    if(!cities.includes(city)){
+    if(!cities.includes(city) ){
         var historyCity = $(`<div class="history__city text-center">${city}</div>`)
         $(".history").append(historyCity)
         cities.push(city)
@@ -44,6 +44,7 @@ function renderHistory() {
     $(".history").text("")
     for(var i=0; i < cities.length; i++){
         $(".history").append(`<div class="history__city text-center">${cities[i]}</div>`)
+        
     }
 }
 
@@ -68,14 +69,16 @@ function searchQuerry(cityName){
         })
         .then(function(data){
             display5Days(data)
-            
+            saveHistory(cityName)
         })
-        
+        .catch(function(error){
+            console.log(error)
+        })
     
 }
 
 function displayToday(data) {
-    console.log(data)
+    
     $(".result__today").text("")
     
     var cityName = data.name
@@ -118,14 +121,14 @@ function displayToday(data) {
 // display 5 Days
 function display5Days(data){
     
-
     divdaylabel.classList.add("forecast_lable", "my-2")
     divdaylabel.textContent = "5-Day Forecast"
     document.querySelector(".result").appendChild(divdaylabel)
-
+    
     
     container5Days.classList.add("5days__container", "container-fluid", "pt-2")
     container5Days.innerHTML = `<div class= "5days_wrap row justify-content-between" ></div>`
+    
     
     
     for(var i=0; i < data.list.length; i+=8){
@@ -147,11 +150,13 @@ function display5Days(data){
 btnEl.addEventListener("click",handleSearchBtnClick)
 
 init();
-
 renderHistory();
 
+
 // click city history searched
+
 var cityDiv = document.querySelectorAll(".history__city")
+
 
 for(var i = 0; i < cityDiv.length; i++){
     cityDiv[i].addEventListener("click",function(e){
